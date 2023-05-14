@@ -3,14 +3,14 @@ Aulatechnik's DMX Laser project using SFML, pigpio and raspberry pi, arduino har
 
 
 Compile with:
-	sfml:
-	g++ test.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system && ./test
+sfml:
+	`g++ test.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system && ./test`
 
-	pigpio:
-	g++ -Wall -pthread -o test serialTest2.cpp -lpigpio -lrt && sudo ./test
+pigpio:
+	`g++ -Wall -pthread -o test serialTest2.cpp -lpigpio -lrt && sudo ./test`
 
-	complete:
-	g++ -Wall -pthread -o test main.cpp -lsfml-graphics -lsfml-window -lsfml-system -lpigpio -lrt && sudo ./test
+complete:
+	`g++ -Wall -pthread -o test main.cpp -lsfml-graphics -lsfml-window -lsfml-system -lpigpio -lrt && sudo ./test`
 
 
 DMX channels:
