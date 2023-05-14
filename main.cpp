@@ -133,7 +133,7 @@ int main() {
 				circle[i].setPointCount(40);
 				circle[i].setOrigin(circle[i].getRadius(), circle[i].getRadius());
 				circle[i].setFillColor(color1);
-				circle[i].setPosition(windowSizex/2 + cos(deg)*dmxo[7], windowSize.y/2 + sin(deg)*dmxo[7]);
+				circle[i].setPosition(windowSize.x/2 + cos(deg)/180*3.1415*dmxo[7], windowSize.y/2 + sin(deg)/180*3.1415*dmxo[7]);
 				window.draw(circle[i]);
 			}
 		}
