@@ -2,10 +2,10 @@
 #include <SFML/Window.hpp>
 
 //#include <pigpio.h> //for serial connection
-//#include <unistd.h> 
+//#include <unistd.h> //??
 #include <iostream> //for cout
 #include <cmath>
-#include <fstream>
+#include <fstream>  //for file read
 
 
 int main() {
@@ -79,9 +79,10 @@ int main() {
 			sf::CircleShape circle1;
 			circle1.setRadius(radius);
 			circle1.setPointCount(40);
-			circle1.setOrigin(circle1.getRadius(), circle1.getRadius());
+			circle1.setOrigin(radius, radius);
 			circle1.setFillColor(color1);
-			circle1.setPosition((dmxo[6]/(255.f/(windowSize.x - circle1.getRadius()*2))+circle1.getRadius()) , (dmxo[7]/(255.f/(windowSize.y  - circle1.getRadius()*2))+circle1.getRadius()));
+			circle1.setPosition(dmxo[6]/(255.f/(windowSize.x - radius*2))+radius , dmxo[7]/(255.f/(windowSize.y - radius*2))+radius);
+			circle1.setRotation(rot);
 			window.draw(circle1);
 			
 		}
@@ -97,16 +98,18 @@ int main() {
 		
 		if (dmxo[5] >= 3 && dmxo[5] <=8) { // single polygon
 			sf::CircleShape poly1;
-			poly1.setPointCount(dmxo[5]);
 			poly1.setRadius(radius);
+			poly1.setPointCount(dmxo[5]);
+			poly1.setOrigin(radius, radius);
 			poly1.setFillColor(color1);
-			poly1.setPosition(dmxo[6]/(255.f/(windowSize.x - poly1.getRadius()*2)) , dmxo[7]/(255.f/(windowSize.y - poly1.getRadius()*2)));
+			poly1.setPosition(dmxo[6]/(255.f/(windowSize.x - radius*2))+radius , dmxo[7]/(255.f/(windowSize.y - radius*2))+radius);
+			poly1.setRotation(rot);
 			window.draw(poly1);
 			
 		}
 		if (dmxo[5] == 9) { // duplicated circle circular
 			sf::CircleShape circle[dmxo[8]];
-			float deg = 0;
+			float deg = 0; // declare globally!
 			for (int i = 0; i < dmxo[8]; i++) {
 				deg = 360.f/dmxo[8]*i+dmxo[7]*360/255; // + y - dmxo[7] rotates globally
 				circle[i].setRadius(radius);
@@ -146,6 +149,44 @@ int main() {
 				window.draw(poly[i]);
 			}
 		}
+
+		if (dmxo[5] == 17) { // duplicated circle vertical
+			sf::CircleShape circle[dmxo[8]];
+			for (int i = 0; i < dmxo[8]; i++) {
+				circle[i].setRadius(radius);
+				circle[i].setPointCount(40);
+				circle[i].setOrigin(radius, radius);
+				circle[i].setFillColor(color1);
+				circle[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2); //divide by 0 on dmxo[8] = 1
+				window.draw(circle[i]);
+			}
+		}
+
+		if (dmxo[5] == 18) { // duplicated line vertical
+			sf::RectangleShape line[dmxo[8]];
+			for (int i = 0; i < dmxo[8]; i++) {
+				line[i].setSize(sf::Vector2f(dmxo[10]/(255.f/windowSize.x), 5));
+				line[i].setOrigin(line[i].getSize().x/2, 2.5);
+				line[i].setFillColor(color1);
+				line[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2);
+				line[i].setRotation(rot);
+				window.draw(line[i]);
+			}
+		}
+		
+		if (dmxo[5] >= 19 && dmxo[5] <= 24) { // duplicated polygon vertical
+			sf::CircleShape poly[dmxo[8]];
+			for (int i = 0; i < dmxo[8]; i++) {
+				poly[i].setRadius(radius);
+				poly[i].setPointCount(dmxo[5]-16);
+				poly[i].setOrigin(radius, radius);
+				poly[i].setFillColor(color1);
+				poly[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2); //adjust to window size!!
+				poly[i].setRotation(rot);
+				window.draw(poly[i]);
+			}
+			
+		}
 		
 		if (dmxo[5] == 25) { // duplicated circle horizontal
 			sf::CircleShape circle[dmxo[8]];
@@ -158,11 +199,31 @@ int main() {
 				window.draw(circle[i]);
 			}
 		}
-	
-		if (dmxo[5] == 17) {
-			
+
+		if (dmxo[5] == 26) { // duplicated line horizontal
+			sf::RectangleShape line[dmxo[8]];
+			for (int i = 0; i < dmxo[8]; i++) {
+				line[i].setSize(sf::Vector2f(dmxo[10]/(255.f/windowSize.x), 5));
+				line[i].setOrigin(line[i].getSize().x/2, 2.5);
+				line[i].setFillColor(color1);
+				line[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius);
+				line[i].setRotation(rot);
+				window.draw(line[i]);
+			}
 		}
-		
+
+		if (dmxo[5] >= 27 && dmxo[5] <= 32) { // duplicated circle horizontal
+			sf::CircleShape poly[dmxo[8]];
+			for (int i = 0; i < dmxo[8]; i++) {
+				poly[i].setRadius(radius);
+				poly[i].setPointCount(dmxo[5]-24);
+				poly[i].setOrigin(radius, radius);
+				poly[i].setFillColor(color1);
+				poly[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius); //divide by 0 on dmxo[8] = 1
+				poly[i].setRotation(rot);
+				window.draw(poly[i]);
+			}
+		}
 		
 		window.display();
 	}
