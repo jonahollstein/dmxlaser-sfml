@@ -75,6 +75,7 @@ int main() {
 		if (dmxo[5] == 0) {
 			
 		}
+		
 		if (dmxo[5] == 1) { // single circle
 			sf::CircleShape circle1;
 			circle1.setRadius(radius);
@@ -105,8 +106,8 @@ int main() {
 			poly1.setPosition(dmxo[6]/(255.f/(windowSize.x - radius*2))+radius , dmxo[7]/(255.f/(windowSize.y - radius*2))+radius);
 			poly1.setRotation(rot);
 			window.draw(poly1);
-			
 		}
+
 		if (dmxo[5] == 9) { // duplicated circle circular
 			sf::CircleShape circle[dmxo[8]];
 			float deg = 0; // declare globally!
@@ -157,7 +158,7 @@ int main() {
 				circle[i].setPointCount(40);
 				circle[i].setOrigin(radius, radius);
 				circle[i].setFillColor(color1);
-				circle[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2); //divide by 0 on dmxo[8] = 1
+				circle[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2.f)+windowSize.y/2); //divide by 0 on dmxo[8] = 1
 				window.draw(circle[i]);
 			}
 		}
@@ -168,7 +169,7 @@ int main() {
 				line[i].setSize(sf::Vector2f(dmxo[10]/(255.f/windowSize.x), 5));
 				line[i].setOrigin(line[i].getSize().x/2, 2.5);
 				line[i].setFillColor(color1);
-				line[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2);
+				line[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2.f)+windowSize.y/2);
 				line[i].setRotation(rot);
 				window.draw(line[i]);
 			}
@@ -181,7 +182,7 @@ int main() {
 				poly[i].setPointCount(dmxo[5]-16);
 				poly[i].setOrigin(radius, radius);
 				poly[i].setFillColor(color1);
-				poly[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2)+windowSize.y/2); //adjust to window size!!
+				poly[i].setPosition((dmxo[6]/(255.f/(windowSize.x - radius*2)))+radius, dmxo[7]*windowSize.y/800*(i-(dmxo[8]-1)/2.f)+windowSize.y/2); //adjust to window size!!
 				poly[i].setRotation(rot);
 				window.draw(poly[i]);
 			}
@@ -195,7 +196,7 @@ int main() {
 				circle[i].setPointCount(40);
 				circle[i].setOrigin(radius, radius);
 				circle[i].setFillColor(color1);
-				circle[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius); //divide by 0 on dmxo[8] = 1
+				circle[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2.f)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius); //divide by 0 on dmxo[8] = 1
 				window.draw(circle[i]);
 			}
 		}
@@ -206,7 +207,7 @@ int main() {
 				line[i].setSize(sf::Vector2f(dmxo[10]/(255.f/windowSize.x), 5));
 				line[i].setOrigin(line[i].getSize().x/2, 2.5);
 				line[i].setFillColor(color1);
-				line[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius);
+				line[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2.f)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius);
 				line[i].setRotation(rot);
 				window.draw(line[i]);
 			}
@@ -219,7 +220,7 @@ int main() {
 				poly[i].setPointCount(dmxo[5]-24);
 				poly[i].setOrigin(radius, radius);
 				poly[i].setFillColor(color1);
-				poly[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius); //divide by 0 on dmxo[8] = 1
+				poly[i].setPosition(dmxo[6]*windowSize.x/1050*(i-(dmxo[8]-1)/2.f)+windowSize.x/2, (dmxo[7]/(255.f/(windowSize.y - radius*2)))+radius); //divide by 0 on dmxo[8] = 1
 				poly[i].setRotation(rot);
 				window.draw(poly[i]);
 			}
