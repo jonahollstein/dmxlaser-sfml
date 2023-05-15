@@ -8,32 +8,6 @@
 #include <fstream>
 
 
-/*
-class dmx {
-	public:
-		const int size = 12;
-		int dmxo[size];
-		int dmxc = -1;
-		
-		//write dmx values from char dmx[] to public int dmxo[] 
-		void setDmx(char dmx[size]) {
-			for (int i = 0; i < size; i ++){
-				dmxo[i] = (uint8_t)dmx[i];
-			}
-			printf("setDmx"); //print success
-		}
-		
-		//print entire dmxo[] in one line
-		void printDmx(){
-			for (int i = 0; i < size; i ++){
-				std::cout << dmxo[i] << "\t";
-			}
-			std::cout << "\n";
-		}
-};
-* */
-
-
 int main() {
 	
 	//declare shit
@@ -45,6 +19,7 @@ int main() {
 
 	sf::Color color1;
 	float rot;
+	float grot;
 	float radius;
 	
 	
@@ -81,7 +56,8 @@ int main() {
 		
 		//calculate global values
 		color1 = sf::Color(dmxo[2], dmxo[3], dmxo[4], dmxo[0]); //color
-		rot += (dmxo[9] - 128.f) *0.2; //rotation factor
+		rot += (dmxo[9] - 128.f) *0.2; // individual rotation factor
+		grot += (dmxo[11] - 128.f) *0.2; // global rotation factor
 		radius = dmxo[10]/(255.f/windowSize.y)/2;
 		
 		//poll sf::close, close window on event 'Closed'
@@ -128,17 +104,46 @@ int main() {
 			window.draw(poly1);
 			
 		}
-		if (dmxo[5] == 9) { // duplicated circle circular???
+		if (dmxo[5] == 9) { // duplicated circle circular
 			sf::CircleShape circle[dmxo[8]];
 			float deg = 0;
 			for (int i = 0; i < dmxo[8]; i++) {
-				deg = 360.f/dmxo[8]*i+dmxo[7]*360/255; // + y
+				deg = 360.f/dmxo[8]*i+dmxo[7]*360/255; // + y - dmxo[7] rotates globally
 				circle[i].setRadius(radius);
 				circle[i].setPointCount(40);
 				circle[i].setOrigin(radius, radius);
 				circle[i].setFillColor(color1);
-			circle[i].setPosition(windowSize.x/2 + cos(deg/180.f*3.1415926535)*2*dmxo[6], windowSize.y/2 + sin(deg/180.f*3.1415926535)*2*dmxo[6]);
+				circle[i].setPosition(windowSize.x/2 + cos(deg/180.f*3.1415926535)*2*dmxo[6], windowSize.y/2 + sin(deg/180.f*3.1415926535)*2*dmxo[6]); //adjust to window size
 				window.draw(circle[i]);
+			}
+		}
+
+		if (dmxo[5] == 10) { // duplicated line circular
+			sf::RectangleShape line[dmxo[8]];
+			float deg = 0;
+			for (int i = 0; i < dmxo[8]; i++) {
+				deg = 360.f/dmxo[8]*i+dmxo[7]*360/255+grot; // + y - dmxo[7] rotates globally
+				line[i].setSize(sf::Vector2f(dmxo[10]/(255.f/windowSize.x), 5));
+				line[i].setOrigin(line[i].getSize().x/2, 2.5);
+				line[i].setFillColor(color1);
+				line[i].setPosition(windowSize.x/2 + cos(deg/180.f*3.1415926535)*2*dmxo[6], windowSize.y/2 + sin(deg/180.f*3.1415926535)*2*dmxo[6]);
+				line[i].setRotation(rot);
+				window.draw(line[i]);
+			}
+		}
+
+		if (dmxo[5] >= 11 && dmxo[5] <= 16) { // duplicated polygon circular
+			sf::CircleShape poly[dmxo[8]];
+			float deg = 0;
+			for (int i = 0; i < dmxo[8]; i++) {
+				deg = 360.f/dmxo[8]*i+dmxo[7]*360/255+grot; // + y - dmxo[7] rotates globally
+				poly[i].setRadius(radius);
+				poly[i].setPointCount(dmxo[5]-8);
+				poly[i].setOrigin(radius, radius);
+				poly[i].setFillColor(color1);
+				poly[i].setPosition(windowSize.x/2 + cos(deg/180.f*3.1415926535)*2*dmxo[6], windowSize.y/2 + sin(deg/180.f*3.1415926535)*2*dmxo[6]); //adjust to window size!!
+				poly[i].setRotation(rot);
+				window.draw(poly[i]);
 			}
 		}
 		
@@ -153,10 +158,7 @@ int main() {
 				window.draw(circle[i]);
 			}
 		}
-		
-		if (dmxo[5] >= 11 && dmxo[5] <= 16) { // duplicated polygon circular
-			
-		}
+	
 		if (dmxo[5] == 17) {
 			
 		}
