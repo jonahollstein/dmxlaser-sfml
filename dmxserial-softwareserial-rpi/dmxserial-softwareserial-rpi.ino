@@ -43,6 +43,8 @@ void loop() {
         mySerial.write(dmxo[j]);
       }
     }
-   
+    else {
+      //mySerial.write('A');
+    }
   }
 }
