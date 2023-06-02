@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-//#include <pigpio.h> //for serial connection
+#include <pigpio.h> //for serial connection
 //#include <unistd.h> //??
 #include <iostream> //for cout
 #include <cmath>
@@ -23,10 +23,10 @@ int main() {
 	float radius;
 	
 	
-	/*setup serial
+	//setup serial
 	gpioInitialise();
 	s = serOpen("/dev/ttyS0", 115200, 0);
-	*/
+	
 	
 	//setup sfml window at 16:9, 60fps
 	//sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); //get desktop resolution
@@ -38,7 +38,7 @@ int main() {
 	while (window.isOpen()) {
 		
 		//poll serial input
-		/*if (serDataAvailable(s) >= dmxSize) {dmxc = serRead(s, dmx, dmxSize);}
+		if (serDataAvailable(s) >= dmxSize) {dmxc = serRead(s, dmx, dmxSize);}
 		
 		if (dmxc > 0) {
 			for (int i = 0; i < dmxSize; i++) {
@@ -47,12 +47,12 @@ int main() {
 			}
 			std::cout << "\n";
 			dmxc = 0;
-		}*/
+		}
 		
 		//poll dmxval file
-		std::ifstream dmxfile("dmxval.txt");
+		/*std::ifstream dmxfile("dmxval.txt");
 		if(dmxfile.is_open()){ for(int i = 0; i < 12; i++){dmxfile >> dmxo[i];}}
-		dmxfile.close();
+		dmxfile.close(); */
 		
 		//calculate global values
 		color1 = sf::Color(dmxo[2], dmxo[3], dmxo[4], dmxo[0]); //color
