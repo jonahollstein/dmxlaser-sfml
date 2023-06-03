@@ -15,12 +15,12 @@ int main() {
 	int dmxc = -1;		//counter for serial bytes read
 	int dmxSize = 12;	//nr of dmx adresses used
 	char dmx[dmxSize];	//char[] for serial buffer
-	int dmxo[dmxSize];	//int[] for storing dmx values
+	int dmxo[dmxSize] = {0, 0, 0, 0, 0, 128, 128, 0, 0, 128};	//int[] for storing dmx values
 
 	sf::Color color1;
-	float rot;
-	float grot;
-	float radius;
+	float rot = 0.0;
+	float grot = 0.0;
+	float radius = 0.0;
 	
 	
 	//setup serial
@@ -29,8 +29,8 @@ int main() {
 	
 	
 	//setup sfml window at 16:9, 60fps
-	//sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); //get desktop resolution
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "sfml-app");
+	sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); //get desktop resolution
+	sf::RenderWindow window(sf::VideoMode(desktop.width, desktop.height), "sfml-app");
 	window.setFramerateLimit(60);
 	sf::Vector2u windowSize = window.getSize();
 	//sf::Clock clock;
@@ -38,27 +38,32 @@ int main() {
 	while (window.isOpen()) {
 		
 		//poll serial input
+		
+		
 		if (serDataAvailable(s) >= dmxSize) {dmxc = serRead(s, dmx, dmxSize);}
 		
 		if (dmxc > 0) {
 			for (int i = 0; i < dmxSize; i++) {
 				dmxo[i] = (int)dmx[i];
-				std::cout << dmxo[i] << "\t";
+				//std::cout << dmxo[i] << "\t";
 			}
-			std::cout << "\n";
+			//std::cout << "\n";
 			dmxc = 0;
 		}
+		
+		
 		
 		//poll dmxval file
 		/*std::ifstream dmxfile("dmxval.txt");
 		if(dmxfile.is_open()){ for(int i = 0; i < 12; i++){dmxfile >> dmxo[i];}}
-		dmxfile.close(); */
+		dmxfile.close();*/
 		
 		//calculate global values
 		color1 = sf::Color(dmxo[2], dmxo[3], dmxo[4], dmxo[0]); //color
 		rot += (dmxo[9] - 128.f) *0.2; // individual rotation factor
 		grot += (dmxo[11] - 128.f) *0.2; // global rotation factor
 		radius = dmxo[10]/(255.f/windowSize.y)/2;
+		
 		
 		//poll sf::close, close window on event 'Closed'
 		sf::Event wclose;
@@ -213,7 +218,7 @@ int main() {
 			}
 		}
 
-		if (dmxo[5] >= 27 && dmxo[5] <= 32) { // duplicated circle horizontal
+		if (dmxo[5] >= 27 && dmxo[5] <= 32) { // duplicated polygon horizontal
 			sf::CircleShape poly[dmxo[8]];
 			for (int i = 0; i < dmxo[8]; i++) {
 				poly[i].setRadius(radius);
