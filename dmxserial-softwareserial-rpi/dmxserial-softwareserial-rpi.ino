@@ -9,7 +9,7 @@ const int RedPin =    3;  // PWM output pin for Red Light.
 const int rxPin =     7;  // input pin for SoftwareSerial, not used atm.
 const int txPin =     8;  // output pin for SoftwareSerial to rpi
 
-const int startChannel = 1;   //set dmx adress here
+const int startChannel = 399;   //set dmx adress here
 const int dmxSize = 12;       //
 
 int dmx[dmxSize];
