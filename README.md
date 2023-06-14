@@ -28,3 +28,6 @@ DMX channels:
 10 - rotation
 11 - size
 12 - free
+
+
+asdsdaf
