@@ -30,11 +30,10 @@ int main() {
 	
 	//setup sfml window at 16:9, 60fps
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); //get desktop resolution
-	sf::RenderWindow window(sf::VideoMode(desktop.width, desktop.height), "sfml-app");
+	sf::RenderWindow window(sf::VideoMode(desktop.width, desktop.height), "sfml-app", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 	sf::Vector2u windowSize = window.getSize();
-	//sf::Clock clock;
-	
+
 	while (window.isOpen()) {
 		
 		//poll serial input

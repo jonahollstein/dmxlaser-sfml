@@ -12,7 +12,7 @@ pigpio:
 
 complete:
 	`g++ -Wall -pthread -o test main.cpp -lsfml-graphics -lsfml-window -lsfml-system -lpigpio -lrt && sudo ./test`
-
+	`g++ -Wall -pthread -o ~/bin/laser-v1.0 main.cpp -lsfml-graphics -lsfml-window -lsfml-system -lpigpio -lrt`
 
 DMX channels:
 
